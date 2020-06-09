@@ -43,13 +43,22 @@ export default class GotService {
         return this._transformBook(book);
     }
 
+    isSet(data) {
+        if (data) {
+            return data
+        } else {
+            return 'no data :('
+        }
+    }
+
     _transformCharacter(char) {
         return {
             name: char.name,
             gender: char.gender,
             born: char.born,
             died: char.died,
-            culture: char.culture
+            culture: char.culture,
+            id: +char.url.replace(/\D+/g, '')
         }
     }
 

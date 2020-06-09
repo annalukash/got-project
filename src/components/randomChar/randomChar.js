@@ -21,10 +21,6 @@ const RandomBlockTerm = styled.span`
 `;
 
 export default class RandomChar extends Component {
-    constructor(props) {
-        super(props);
-        this.updateCharacter();
-    }
 
     gotService = new GotService();
 
@@ -32,6 +28,15 @@ export default class RandomChar extends Component {
         char: {},
         loading: true,
         error: false
+    }
+
+    componentDidMount() {
+        this.updateCharacter();
+        this.timerId = setInterval(this.updateCharacter, 4000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
     }
 
     onCharLoaded = (char) => {
@@ -48,7 +53,8 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateCharacter() {
+    updateCharacter = () => {
+
         const id = Math.floor(Math.random() * 140 + 25); //указываем диапазон от 25 до 140
         // let id = 1500000000;
         this.gotService.getCharacter(id)
@@ -71,32 +77,32 @@ export default class RandomChar extends Component {
             </RandomBlock>
         );
         
-
-        
     }
 }
 
 const View = ({char}) => {
+    const gotService = new GotService();
+
     const {name, gender, born, died, culture} = char;
     return (
         <>
-            <RandomBlockTitle>Random Character: {name}</RandomBlockTitle>
+            <RandomBlockTitle>Random Character: {gotService.isSet(name)}</RandomBlockTitle>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between">
                     <RandomBlockTerm>Gender </RandomBlockTerm>
-                    <span>{gender}</span>
+                    <span>{gotService.isSet(gender)}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <RandomBlockTerm>Born </RandomBlockTerm>
-                    <span>{born}</span>
+                    <span>{gotService.isSet(born)}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <RandomBlockTerm>Died </RandomBlockTerm>
-                    <span>{died}</span>
+                    <span>{gotService.isSet(died)}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <RandomBlockTerm>Culture </RandomBlockTerm>
-                    <span>{culture}</span>
+                    <span>{gotService.isSet(culture)}</span>
                 </li>
             </ul>
         </>
