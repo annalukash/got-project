@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GotService from '../../services/service';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
+import { Row, Col } from 'reactstrap';
 
 
 const RandomBlock = styled.div`
@@ -18,6 +19,10 @@ const RandomBlockTitle = styled.h4`
 
 const RandomBlockTerm = styled.span`
     font-weight: bold;
+`;
+
+const Wrapper = styled.div`
+    margin-top: 120px;
 `;
 
 export default class RandomChar extends Component {
@@ -56,7 +61,6 @@ export default class RandomChar extends Component {
     updateCharacter = () => {
 
         const id = Math.floor(Math.random() * 140 + 25); //указываем диапазон от 25 до 140
-        // let id = 1500000000;
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError);
@@ -70,11 +74,18 @@ export default class RandomChar extends Component {
         const content = !(loading || error) ? <View char={char}/> : null;
 
         return (
-            <RandomBlock className="rounded">
-                {errorMessage}
-                {spinner}
-                {content}
-            </RandomBlock>
+            <Row className="justify-content-center align-items-center">
+                <Col className="col-sm-6">
+                    <Wrapper>
+                        <RandomBlock className="rounded">
+                            {errorMessage}
+                            {spinner}
+                            {content}
+                        </RandomBlock>
+                    </Wrapper>
+                </Col>
+            </Row>
+            
         );
         
     }

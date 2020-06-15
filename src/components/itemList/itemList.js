@@ -1,20 +1,31 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import GotService from '../../services/service';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
 
 const ListGroupItem = styled.li`
     cursor: pointer;
+    margin-left: -25px;
+    padding: 10px;
+    background-color: #EEE;
+    margin-bottom: 5px;
+
+    &:hover {
+        margin-left: -20px;
+        background-color: #AAA;
+        color: white;
+        transition: all 300ms ease;
+        -moz-transition: all 300ms ease;
+        -webkit-transition: all 300ms ease;
+        -o-transition: all 300ms ease;
+    }
 `;
 
 export default class ItemList extends Component {
-
-    gotService = new GotService();
-
+    
     state = {
-        charList: [],
+        itemList: [],
         loading: true,
         error: false
     }
@@ -24,28 +35,33 @@ export default class ItemList extends Component {
     }
 
     getCharacters() {
-        this.gotService.getAllCharacters()
+        const {getData} = this.props;
+
+        getData()
             .then(this.onCharLoaded)
             .catch(this.onError);
     }
 
     renderItems(arr) {
         return arr.map((item, index) => {
+            const {id} = item;
+            const label = this.props.renderItem(item);
+
             return (
                 <ListGroupItem 
                     key={index}
                     className="list-group-item"
-                    onClick={() => this.props.onCharSelected(item.id)}
+                    onClick={() => this.props.onItemSelected(id)}
                 >
-                    {item.name}
+                    {label}
                 </ListGroupItem>
             )
         })
     }
 
-    onCharLoaded = (charList) => {
+    onCharLoaded = (itemList) => {
         this.setState({
-            charList,
+            itemList,
             loading: false
         })
     }
@@ -58,9 +74,9 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const {charList, error, loading} = this.state;
+        const {itemList, error, loading} = this.state;
 
-        const items = this.renderItems(charList);
+        const items = this.renderItems(itemList);
 
         const errorMessage = error ? <ErrorMessage/> : null;
         const spinner = loading ? <Spinner/> : null;

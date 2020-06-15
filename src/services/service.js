@@ -1,9 +1,9 @@
 export default class GotService {
     constructor() {
-        this._apiBase = 'https://www.anapioficeandfire.com/api'
+        this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
 
-    async getResourse(url) {
+    getResourse = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
 
         if (!res.ok) {
@@ -13,37 +13,39 @@ export default class GotService {
         return await res.json();
     }
 
-    async getAllCharacters() {
+    getAllCharacters = async () => {
         const res =  await this.getResourse('/characters?page=5&pageSize=10');
         return res.map(this._transformCharacter)
     }
 
-    async getCharacter(id) {
+    getCharacter = async (id) => {
         const character = await this.getResourse(`/characters/${id}`);
         return this._transformCharacter(character);
     }
 
-    async getAllHouses() {
+    getAllHouses = async () => {
         const houses = await this.getResourse(`/houses/`);
         return houses.map(this._transformHouse)
     }
 
-    async getHouse(id) {
-        const house = await this.getResourse(`/houses/${id}/`);
+    getHouse = async (id) => {
+        const house = await this.getResourse(`/houses/${id}`);
         return this._transformHouse(house);
     }
 
-    async getAllBooks() {
+    getAllBooks = async () => {
         const books = await this.getResourse(`/books/`);
         return books.map(this._transformBook);
     }
 
-    async getBook(id) {
-        const book = await this.getResourse(`/books/${id}/`);
+    getBook = async (id) => {
+        const book = await this.getResourse(`/books/${id}`);
         return this._transformBook(book);
     }
 
-    isSet(data) {
+
+
+    isSet = (data) => {
         if (data) {
             return data
         } else {
@@ -51,7 +53,10 @@ export default class GotService {
         }
     }
 
-    _transformCharacter(char) {
+    
+    
+
+    _transformCharacter = (char) => {
         return {
             name: char.name,
             gender: char.gender,
@@ -62,23 +67,25 @@ export default class GotService {
         }
     }
 
-    _transformHouse(house) {
+    _transformHouse = (house) => {
         return {
             name: house.name,
             region: house.region,
             words: house.words,
             titles: house.titles,
             overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons
+            ancestralWeapons: house.ancestralWeapons,
+            id: +house.url.replace(/\D+/g, '')
         }
     }
 
-    _transformBook(book) {
+    _transformBook = (book) => {
         return {
             name: book.name,
             numberOfPages: book.numberOfPages,
-            publiser: book.publiser,
-            released: book.released
+            publisher: book.publisher,
+            released: book.released,
+            id: +book.url.replace(/\D+/g, '')
         }
     }
 }
