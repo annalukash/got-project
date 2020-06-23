@@ -5,9 +5,9 @@ import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
 import GotService from '../../services/service';
 import styled from 'styled-components';
-import {CharacterPage, BooksPage, HousesPage, BooksItem, WelcomePage} from '../pages';
+import {CharacterPage, BooksPage, HousesPage, BooksItem, WelcomePage, ErrorPage} from '../pages';
 
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
 
 const AppWrapper = styled.div`
@@ -65,16 +65,18 @@ export default class App extends Component {
                     <Container>
                         <Switch>
                             <Route exact path="/" component={WelcomePage}/>
-                            <Route path="/randomChar" component={RandomChar}/>
-                            <Route path="/characters" component={CharacterPage}/>
-                            <Route path="/houses" component={HousesPage}/>
-                            <Route path="/books" exact component={BooksPage}/>
-                            <Route path="/books/:id" render={
+                            <Route exact path="/randomChar" component={RandomChar}/>
+                            <Route exact path="/characters" component={CharacterPage}/>
+                            <Route exact path="/houses" component={HousesPage}/>
+                            <Route exact path="/books" component={BooksPage}/>
+                            <Route exact path="/books/:id" render={
                                 ({match}) => {
                                     const {id} = match.params;
                                     return <BooksItem bookId = {id}/>
                                 }
                             }/>
+                            <Route path="/404" exact component={ErrorPage}/>
+                            <Redirect to="/404" />
                         </Switch>
                     </Container>
                 </AppWrapper>

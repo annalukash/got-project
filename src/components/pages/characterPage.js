@@ -28,6 +28,7 @@ export default class CharacterPage extends Component {
     }
 
     onItemSelected = (id) => {
+        console.log(id)
         this.setState({
             selectedItem: id
         })

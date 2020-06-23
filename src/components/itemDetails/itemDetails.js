@@ -20,11 +20,6 @@ const ItemDetailTerm = styled.span`
     font-weight: bold;
 `;
 
-// const CharDetailError = styled.span`
-//     color: #fff;
-//     text-align: center;
-//     font-size: 26px; 
-// `;
 
 const Field = ({item, field, label}) => {
     const gotService = new GotService();

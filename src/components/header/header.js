@@ -45,7 +45,7 @@ const Header = () => {
                         <Link to="/houses/">Houses</Link>
                     </li>
                     <li>
-                        <Link to='/books'>Books</Link>   
+                        <Link to="/books/">Books</Link>   
                     </li>
                 </HeaderLinks>
             </HeaderBlock>

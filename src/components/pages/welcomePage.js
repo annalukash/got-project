@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 const WelcomeWrapper = styled.div`
     max-width: 700px;
     width: 100%;
-    margin: 150px auto 0;
+    margin: 350px auto 0;
     text-align: center;
 `;
 
@@ -29,7 +29,7 @@ const StartButton = styled.button`
     transition: all 0.4s ease 0s;
 
     &:hover {
-        background: #434343;
+        background: #ed3330;
         letter-spacing: 1px;
         -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
         -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
@@ -37,6 +37,8 @@ const StartButton = styled.button`
         transition: all 0.4s ease 0s;
     }
 `;
+
+export {StartButton};
 
 export default class WelcomePage extends Component {
    
@@ -47,7 +49,7 @@ export default class WelcomePage extends Component {
         return (
             <WelcomeWrapper>
                 <WelcomeBlock>Welcome to Game of Thrones DB</WelcomeBlock>
-                <Link to='/randomChar'>
+                <Link to='/randomChar/'>
                     <StartButton>
                     Let's Start
                     </StartButton>
